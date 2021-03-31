@@ -1,0 +1,150 @@
+{% extends 'base2.html' %}
+
+{% block alert %}
+{% if alert_msg %}
+<div class="alert alert-{{ alert_msg.type }}" role="alert">
+  {{ alert_msg.msg }}
+</div>
+{% endif %}
+{% endblock %}
+
+{% block title %}
+Patient Index
+{% endblock %}
+
+{% block lead %}
+환자들을 조회, 추가, 및 삭제하는 페이지입니다.
+{% endblock %}
+
+{% block main_body %}
+
+
+
+
+<form method="POST" action="/api/patient">
+
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isname"><b>환자 이름</b></label>
+    <input name="isname" style="margin-bottom:10px" class="form-control" type="text" placeholder="환자의 이름을 입력하세요"/>
+  </div>
+  
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isemail"><b>환자 email</b></label>
+    <input name="isemail" style="margin-bottom:10px" class="form-control" type="text" placeholder="환자의 email 주소를 입력하세요"/>
+  </div>
+
+
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isage"><b>환자 나이</b></label>
+    <input name="isage" style="margin-bottom:10px" class="form-control" type="number" placeholder="환자의 나이를 입력하세요"/>
+  </div>
+  
+
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isgender"><b>환자 성별</b></label>
+    <select name="isgender" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="1">남성</option>
+      <option value="0">여성</option>" . $options . "
+    </select>
+  </div>
+
+
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isscholarship"><b>지원금 수령여부</b></label>
+    <select name="isscholarship" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="1">지원금 수령</option>
+      <option value="0">지원금 미수령</option>" . $options . "
+    </select>
+  </div>
+  
+  <div class="form-group">
+      <label style="font-size:20px;color:rgb(55, 124, 252)" for="ishypertention"><b>고혈압 유무</b></label>
+      <select name="ishypertention" class="form-control" id="exampleFormControlSelect1">
+        <option value="None">선택</option>
+        <option value="0">정상</option>
+        <option value="1">고혈압 환자</option>" . $options . "
+      </select>
+  </div>
+  
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isdiabetes"><b>당뇨 유무</b></label>
+    <select name="isdiabetes" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="0">정상</option>
+      <option value="1">당뇨 환자</option>" . $options . "
+    </select>
+  </div>
+  
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="isalcoholism"><b>알콜 의존증 유무</b></label>
+    <select name="isalcoholism" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="0">정상</option>
+      <option value="1">알콜 의존증 환자</option>" . $options . "
+    </select>
+  </div>
+
+  
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="ishandicap"><b>장애 여부</b></label>
+    <select name="ishandicap" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="0">정상</option>
+      <option value="1">장애 있음</option>" . $options . "
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label style="font-size:20px;color:rgb(55, 124, 252)" for="issms_received"><b>예약 안내 문자 수신여부</b></label>
+    <select name="issms_received" class="form-control" id="exampleFormControlSelect1">
+      <option value="None">선택</option>
+      <option value="1">수신</option>
+      <option value="0">미수신</option>" . $options . "
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">환자정보등록</button>
+</form>
+
+
+
+{% if patient_list %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Age</th>
+      <th scope="col">email</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for patient in patient_list %}
+    <tr>
+      <th scope="row">{{ patient.id }}</th>
+      <td>{{ patient.name }}</td>
+      <td>{{ patient.gender }}</td>
+      <td>{{ patient.age }}</td>
+      <td>{{ patient.email }}</td>
+      <td>
+        <!--delete버튼을 클릭하면 href주소로 넘어갑니다 즉 다른데로 링크를 해주는 버튼입니다-->
+        <a class="btn btn-secondary", href='/api/patient/{{ patient.id }}'>
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+

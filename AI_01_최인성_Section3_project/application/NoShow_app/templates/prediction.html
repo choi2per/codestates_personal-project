@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title  %}
+Predict NoShow!
+{% endblock  %}
+
+{% block lead  %}
+To predict NoShow, press the button
+{% endblock  %}
+
+{% block main_body  %}
+<form method="POST" action="/prediction">
+  <div class="form-group">
+    <label for="exampleFormControlSelect1">환자의 이름을 선택하세요</label>
+    <select name="patient_" class="form-control" id="exampleFormControlSelect1">
+      {% for patient in patients %}
+      <option value={{patient.id}}>{{patient.name}}</option>
+      {% endfor %}
+    </select>
+  <input type="submit" class="btn btn-primary" value="NoShow 예측 시작" />
+    
+  </div>
+
+  
+
+
+</form>
+
+
+{% if result %}
+
+
+<p><span style="border-radius: 15px 15px 15px 0; border: 3px solid #FFAD5B; padding: 0.5em 0.6em; color: #FF8000;">
+  [NoShow 예측결과] : <b>'{{ patient_name }}'</b> 환자는 예약일에 <b>'{{result}}'</b> 할 것으로 예측됩니다.</span></p>
+
+
+{% endif %}
+
+
+
+{% endblock  %}
